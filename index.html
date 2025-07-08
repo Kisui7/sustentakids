@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Sustenta Kids - Início</title>
+<style>
+  /* Reset básico */
+  * {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+  }
+
+  body, html {
+    height: 100%;
+    background: #001F3F; /* azul escuro */
+    color: #f9e6c5;
+    font-family: 'Nunito', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+  #logo {
+  max-width: 500px;
+  width: 1000%;
+  user-select: none;
+  margin-bottom: 30px;
+}
+
+#info-text {
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 600;
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+
+#projeto-frase {
+  font-size: clamp(1.5rem, 4vw, 2.5rem); /* responsivo */
+  font-weight: bold;
+  color: #f9e6c5;
+  margin-bottom: 40px;
+  max-width: 100%;
+  line-height: 1.3;
+  text-align: center;
+  white-space: normal;
+  word-break: break-word;
+  padding: 0 10px;
+}
+  #arrow-next {
+    font-size: 5rem;
+    color: #FFD700;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.3s ease;
+  }
+
+  #arrow-next:hover,
+  #arrow-next:focus {
+    color: #FFF200;
+    outline: none;
+  }
+</style>
+</head>
+<body>
+
+<img src="sustenta-kids.jpeg" alt="Logo Sustenta Kids" id="logo" />
+
+<div id="info-text">
+  5º Ano A<br />
+  Cemeb Vinicius de Moraes <br />
+  Professora Keila
+</div>
+
+<h1 id="projeto-frase">
+  Projeto Sustenta Kids – pequenas ações transforma gerações
+</h1>
+<div id="arrow-next" role="button" tabindex="0" aria-label="Avançar para o Show do Milhão">&#9654;</div>
+
+<script>
+  const arrowNext = document.getElementById('arrow-next');
+
+  function goToShowPage() {
+    window.location.href = 'show.html';
+  }
+
+  arrowNext.addEventListener('click', goToShowPage);
+  arrowNext.addEventListener('keydown', (e) => {
+    if(e.key === 'Enter' || e.key === ' ') {
+      goToShowPage();
+    }
+  });
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <title>Show do Milhão</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+
+            body {
+                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+                background: linear-gradient(to bottom right, #003366, #0066cc);
+                color: white;
+                min-height: 100vh;
+                display: flex;
+                flex-direction: column;
+                padding: 10px 20px;
+            }
+
+            header {
+                width: 90%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 25px;
+            }
+
+            header img {
+                height: 250px;
+                object-fit: contain;
+            }
+
+            main {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                gap: 40px;
+            }
+
+            #left-panel {
+                flex: 1 1 55%;
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            #question-box {
+                background: #c70000;
+                border: 3px solid white;
+                border-radius: 12px;
+                padding: 30px;
+                font-size: 2.6rem;
+                font-weight: 700;
+                min-height: 140px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+
+            #answers-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .answer-btn {
+                background: #c70000;
+                border: 2px solid white;
+                color: white;
+                font-size: 2rem;
+                border-radius: 10px;
+                padding: 20px 30px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                cursor: pointer;
+                user-select: none;
+                justify-content: flex-start;
+                width: 100%;
+                transition: all 0.3s;
+            }
+
+            .answer-btn:disabled {
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+
+            .circle-number {
+                min-width: 45px;
+                min-height: 45px;
+                background: white;
+                color: #c70000;
+                border-radius: 50%;
+                font-weight: bold;
+                font-size: 1.8rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .correct {
+                background-color: #2ecc40 !important;
+                color: white !important;
+            }
+
+            .incorrect {
+                background-color: #555 !important;
+                color: #ccc !important;
+            }
+
+            #right-panel {
+                flex: 1 1 35%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 25px;
+            }
+
+            #prize-box {
+                background: #ffbf00;
+                color: #c70000;
+                font-size: 2.2rem;
+                font-weight: bold;
+                padding: 20px 30px;
+                border-radius: 15px;
+                border: 3px solid white;
+                text-align: center;
+            }
+
+            #timer {
+                font-size: 2.2rem;
+                font-weight: bold;
+                border: 2px solid white;
+                border-radius: 10px;
+                padding: 10px 20px;
+                background-color: #ffbf00;
+                color: white;
+                width: fit-content;
+                text-align: center;
+            }
+
+            #help-box {
+                background: linear-gradient(135deg, #004080, #0077cc);
+                padding: 25px 20px;
+                border-radius: 15px;
+                width: 100%;
+                box-shadow: 0 0 12px rgba(0, 119, 204, 0.8);
+            }
+
+            #help-box h3 {
+                font-size: 1.8rem;
+                text-align: center;
+                margin-bottom: 15px;
+            }
+
+            .help-btn {
+                background: #c70000;
+                border: 2px solid white;
+                color: white;
+                font-size: 1.5rem;
+                padding: 14px 20px;
+                border-radius: 12px;
+                cursor: pointer;
+                user-select: none;
+                width: 100%;
+                margin-bottom: 12px;
+                transition: opacity 0.3s;
+            }
+
+            .help-btn:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+            /* Popup */
+            #popup-overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                display: none;
+                justify-content: center;
+                align-items: center;
+                z-index: 999;
+            }
+
+            #popup {
+                background: linear-gradient(135deg, #004080, #0077cc);
+                padding: 35px;
+                border-radius: 20px;
+                max-width: 500px;
+                text-align: center;
+                color: white;
+            }
+
+            #popup h2 {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+
+            #popup-prize {
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: yellow;
+                padding: 12px 20px;
+                border-radius: 12px;
+                margin: 20px 0 30px 0;
+                display: none;
+            }
+
+            #popup-buttons button {
+                padding: 14px 28px;
+                font-size: 1.2rem;
+                font-weight: bold;
+                margin: 8px;
+                border-radius: 10px;
+                border: none;
+                cursor: pointer;
+            }
+
+            .continue-btn {
+                background-color: #2ecc40;
+                color: white;
+            }
+
+            .finish-btn {
+                background-color: #c70000;
+                color: white;
+            }
+
+            .back-btn {
+                background-color: #c70000;
+                color: yellow;
+                border: 2px solid yellow;
+            }
+
+            @media (max-width: 900px) {
+                main {
+                    flex-direction: column;
+                    gap: 30px;
+                }
+
+                #left-panel,
+                #right-panel {
+                    flex: 1 1 100%;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <img src="showdomilhão (2).jpg" alt="Logo Show do Milhão" />
+            <img src="sustenta-kids.jpeg" alt="Logo Sustenta Kids" />
+        </header>
+
+        <main>
+            <section id="left-panel">
+                <div id="question-box">Carregando pergunta...</div>
+                <div id="answers-container">
+                    <!-- Botões de alternativas aparecem aqui -->
+                </div>
+            </section>
+
+            <aside id="right-panel">
+                <div id="prize-box">Prêmio: R$ 0</div>
+                <div id="timer">30</div>
+                <div id="help-box">
+                    <h3>Ajuda</h3>
+                    <button id="help-skip" class="help-btn">Pular</button>
+                    <button id="help-universitarios" class="help-btn">
+                        Universitários
+                    </button>
+                    <button id="help-sustenta" class="help-btn">
+                        SustentaKids
+                    </button>
+                </div>
+            </aside>
+        </main>
+
+        <div id="popup-overlay">
+            <div id="popup">
+                <h2 id="popup-message">Mensagem</h2>
+                <div id="popup-prize"></div>
+                <div id="popup-buttons"></div>
+            </div>
+        </div>
+
+        <script>
+            const questions = [
+                // 🌍 Aquecimento Global
+                {
+                    question: "O que é o aquecimento global?",
+                    answers: [
+                        "O aumento da temperatura da Terra por causa da poluição",
+                        "Quando o Sol fica mais perto do planeta",
+                        "Quando há mais chuvas no verão",
+                        "Quando os carros andam mais rápido",
+                    ],
+                    correctIndex: 0,
+                },
+                {
+                    question:
+                        "Qual gás poluente contribui para o aquecimento global?",
+                    answers: [
+                        "Oxigênio",
+                        "Dióxido de carbono (CO₂)",
+                        "Álcool",
+                        "Gás hélio",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question:
+                        "Qual atitude ajuda a diminuir o aquecimento global?",
+                    answers: [
+                        "Desmatar florestas",
+                        "Plantar árvores",
+                        "Usar mais plástico",
+                        "Jogar lixo na rua",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question: "O que acontece quando o planeta esquenta muito?",
+                    answers: [
+                        "As árvores crescem mais rápido",
+                        "O mar fica seco",
+                        "As geleiras derretem e o nível do mar sobe",
+                        "Faz mais frio nas cidades",
+                    ],
+                    correctIndex: 2,
+                },
+
+                // 🌱 Sustentabilidade
+                {
+                    question: "O que é ser sustentável?",
+                    answers: [
+                        "Cuidar do planeta pensando no futuro",
+                        "Comprar muitas roupas",
+                        "Lavar o carro todos os dias",
+                        "Jogar lixo no mato",
+                    ],
+                    correctIndex: 0,
+                },
+                {
+                    question:
+                        "Qual dessas atitudes mostra cuidado com a natureza?",
+                    answers: [
+                        "Usar canudos de plástico",
+                        "Separar o lixo para reciclagem",
+                        "Deixar luzes acesas sem precisar",
+                        "Desperdiçar comida",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question: "Qual dessas ações economiza energia elétrica?",
+                    answers: [
+                        "Usar lâmpadas LED",
+                        "Ligar a TV sem ninguém assistindo",
+                        "Deixar a geladeira aberta",
+                        "Dormir com todas as luzes acesas",
+                    ],
+                    correctIndex: 0,
+                },
+                {
+                    question: "Qual desses recursos é renovável?",
+                    answers: [
+                        "Petróleo",
+                        "Carvão",
+                        "Água da chuva",
+                        "Gás natural",
+                    ],
+                    correctIndex: 2,
+                },
+
+                // 🐾 Animais em Extinção
+                {
+                    question: "O que significa um animal estar em extinção?",
+                    answers: [
+                        "Ele está dormindo",
+                        "Ele está desaparecendo da natureza",
+                        "Ele está com fome",
+                        "Ele virou um dinossauro",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question:
+                        "Qual dessas atitudes ajuda a proteger os animais?",
+                    answers: [
+                        "Caçar animais silvestres",
+                        "Cuidar das florestas onde eles vivem",
+                        "Jogar lixo nos rios",
+                        "Cortar todas as árvores",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question:
+                        "Por que alguns animais correm risco de extinção?",
+                    answers: [
+                        "Porque nascem muitos filhotes",
+                        "Porque comem muito",
+                        "Por causa da caça e destruição do habitat",
+                        "Porque estão ficando velhos",
+                    ],
+                    correctIndex: 2,
+                },
+                {
+                    question: "Onde vive o urso polar, que está em perigo?",
+                    answers: [
+                        "Na praia",
+                        "Na floresta tropical",
+                        "No gelo das regiões frias",
+                        "No deserto",
+                    ],
+                    correctIndex: 2,
+                },
+
+                // ♻️ Coleta Seletiva
+                {
+                    question: "Para que serve a coleta seletiva?",
+                    answers: [
+                        "Para misturar todo o lixo",
+                        "Para queimar o lixo",
+                        "Para separar os materiais e ajudar a reciclar",
+                        "Para jogar tudo no mar",
+                    ],
+                    correctIndex: 2,
+                },
+                {
+                    question: "Qual cor da lixeira é usada para plástico?",
+                    answers: ["Azul", "Vermelha", "Verde", "Amarela"],
+                    correctIndex: 1,
+                },
+                {
+                    question: "O que deve ser jogado na lixeira azul?",
+                    answers: ["Vidro", "Plástico", "Papel", "Metal"],
+                    correctIndex: 2,
+                },
+                {
+                    question: "Qual dessas atitudes ajuda na reciclagem?",
+                    answers: [
+                        "Separar papel, plástico, vidro e metal",
+                        "Jogar o lixo em qualquer lugar",
+                        "Queimar latas e garrafas",
+                        "Misturar lixo orgânico com reciclável",
+                    ],
+                    correctIndex: 0,
+                },
+            ];
+
+            const prizeValues = [
+                "R$ 1.000",
+                "R$ 2.000",
+                "R$ 3.000",
+                "R$ 4.000",
+                "R$ 5.000",
+                "R$ 10.000",
+                "R$ 20.000",
+                "R$ 30.000",
+                "R$ 40.000",
+                "R$ 60.000",
+                "R$ 80.000",
+                "R$ 100.000",
+                "R$ 200.000",
+                "R$ 300.000",
+                "R$ 400.000",
+                "R$ 500.000",
+                "R$ 1.000.000",
+            ];
+
+            let currentQuestionIndex = Math.floor(
+                Math.random() * questions.length
+            );
+            let timeLeft = 30;
+            let timerInterval;
+            let currentPrizeStep = 0;
+
+            const questionBox = document.getElementById("question-box");
+            const answersContainer =
+                document.getElementById("answers-container");
+            const prizeBox = document.getElementById("prize-box");
+            const timerDisplay = document.getElementById("timer");
+
+            const helpSkipBtn = document.getElementById("help-skip");
+            const helpUniversitariosBtn = document.getElementById(
+                "help-universitarios"
+            );
+            const helpSustentaBtn = document.getElementById("help-sustenta");
+
+            const popupOverlay = document.getElementById("popup-overlay");
+            const popupMessage = document.getElementById("popup-message");
+            const popupButtons = document.getElementById("popup-buttons");
+            const popupPrize = document.getElementById("popup-prize");
+
+            const usedHelps = {
+                skip: false,
+                universitarios: false,
+                sustenta: false,
+            };
+
+            const helpPopupShown = {
+                skip: false,
+                universitarios: false,
+                sustenta: false,
+            };
+
+            function initGame() {
+                currentPrizeStep = 0;
+                currentQuestionIndex = Math.floor(
+                    Math.random() * questions.length
+                );
+                usedHelps.skip =
+                    usedHelps.universitarios =
+                    usedHelps.sustenta =
+                        false;
+                helpPopupShown.skip =
+                    helpPopupShown.universitarios =
+                    helpPopupShown.sustenta =
+                        false;
+                enableHelpButtons();
+                loadQuestion();
+            }
+
+            function loadQuestion() {
+                const q = questions[currentQuestionIndex];
+                questionBox.textContent = q.question;
+                answersContainer.innerHTML = "";
+                q.answers.forEach((answer, index) => {
+                    const btn = document.createElement("button");
+                    btn.className = "answer-btn";
+                    btn.innerHTML = `<span class="circle-number">${
+                        index + 1
+                    }</span> ${answer}`;
+                    btn.dataset.index = index;
+                    btn.onclick = () => selectAnswer(index, btn);
+                    answersContainer.appendChild(btn);
+                });
+
+                updatePrize();
+                resetTimer();
+                startTimer();
+            }
+
+            function updatePrize() {
+                prizeBox.textContent =
+                    "Prêmio: " + (prizeValues[currentPrizeStep] || "R$ 0");
+            }
+
+            function resetTimer() {
+                clearInterval(timerInterval);
+                timeLeft = 30;
+                timerDisplay.textContent = timeLeft;
+            }
+
+            function startTimer() {
+                timerInterval = setInterval(() => {
+                    timeLeft--;
+                    timerDisplay.textContent = timeLeft;
+                    if (timeLeft <= 0) {
+                        clearInterval(timerInterval);
+                        disableAnswerButtons();
+                        showPopup(false);
+                    }
+                }, 1000);
+            }
+
+            function disableAnswerButtons() {
+                document
+                    .querySelectorAll(".answer-btn")
+                    .forEach((btn) => (btn.disabled = true));
+            }
+
+            function selectAnswer(index, btn) {
+                clearInterval(timerInterval);
+                disableAnswerButtons();
+
+                const correct =
+                    index === questions[currentQuestionIndex].correctIndex;
+                btn.classList.add(correct ? "correct" : "incorrect");
+
+                if (correct) {
+                    currentPrizeStep++;
+                    if (currentPrizeStep === prizeValues.length) {
+                        // Chegou ao prêmio máximo, redireciona para a tela de vitória
+                        window.location.href = "vitoria.html";
+                        return;
+                    }
+                }
+                showPopup(correct);
+            }
+            function showPopup(correct) {
+                popupOverlay.style.display = "flex";
+                popupButtons.innerHTML = "";
+                popupPrize.style.display = "none";
+
+                if (correct) {
+                    popupMessage.textContent = "Parabéns! Você acertou.";
+
+                    const continueBtn = document.createElement("button");
+                    continueBtn.className = "continue-btn";
+                    continueBtn.textContent = "Continuar";
+                    continueBtn.onclick = () => {
+                        popupOverlay.style.display = "none";
+                        nextQuestion();
+                    };
+                    popupButtons.appendChild(continueBtn);
+                } else {
+                    popupMessage.textContent = "Infelizmente você errou.";
+
+                    const retryBtn = document.createElement("button");
+                    retryBtn.className = "retry-btn";
+                    retryBtn.textContent = "Tentar outra pergunta";
+                    retryBtn.onclick = () => {
+                        popupOverlay.style.display = "none";
+                        currentQuestionIndex = Math.floor(
+                            Math.random() * questions.length
+                        );
+                        loadQuestion();
+                    };
+                    popupButtons.appendChild(retryBtn);
+                }
+
+                const finishBtn = document.createElement("button");
+                finishBtn.className = "finish-btn";
+                finishBtn.textContent = "Finalizar";
+                finishBtn.onclick = () => {
+                    showFinalScreen();
+                };
+                popupButtons.appendChild(finishBtn);
+            }
+
+            function showFinalScreen() {
+                popupOverlay.style.display = "flex";
+                popupButtons.innerHTML = "";
+                popupPrize.style.display = "block";
+
+                popupMessage.textContent = "Parabéns!";
+                popupMessage.style.color = "#FFD700";
+                popupMessage.style.fontSize = "2.2rem";
+                popupMessage.style.border = "none";
+                popupMessage.style.textShadow = "2px 2px 4px rgba(0,0,0,0.6)";
+                popupMessage.style.background = "transparent";
+                popupMessage.style.padding = "0";
+
+                let finalPrize = "R$ 0";
+                if (currentPrizeStep > 0) {
+                    finalPrize = prizeValues[currentPrizeStep - 1] || "R$ 0";
+                }
+                popupMessage.textContent = `Você finalizou com o prêmio de ${finalPrize}`;
+
+                const backBtn = document.createElement("button");
+                backBtn.textContent = "Voltar ao Menu";
+                backBtn.onclick = () => {
+                    window.location.href = "show.html";
+                };
+
+                popupButtons.appendChild(backBtn);
+            }
+            function nextQuestion() {
+                currentQuestionIndex = Math.floor(
+                    Math.random() * questions.length
+                );
+                loadQuestion();
+            }
+
+            function enableHelpButtons() {
+                helpSkipBtn.disabled = false;
+                helpUniversitariosBtn.disabled = false;
+                helpSustentaBtn.disabled = false;
+            }
+
+            function showHelpPopup(message, onClose) {
+                popupOverlay.style.display = "flex";
+                popupPrize.style.display = "none";
+                popupButtons.innerHTML = "";
+                popupMessage.style.color = "white";
+                popupMessage.style.border = "none";
+                popupMessage.textContent = message;
+
+                const closeBtn = document.createElement("button");
+                closeBtn.className = "continue-btn";
+                closeBtn.textContent = "Fechar";
+                closeBtn.onclick = () => {
+                    popupOverlay.style.display = "none";
+                    if (onClose) onClose();
+                };
+                popupButtons.appendChild(closeBtn);
+            }
+
+            helpSkipBtn.onclick = () => {
+                if (usedHelps.skip) return;
+                if (!helpPopupShown.skip) {
+                    helpPopupShown.skip = true;
+                    showHelpPopup(
+                        "Ajuda 'Pular': Avance para a próxima pergunta sem responder.",
+                        () => {
+                            applySkipHelp();
+                        }
+                    );
+                } else {
+                    applySkipHelp();
+                }
+            };
+
+            function applySkipHelp() {
+                usedHelps.skip = true;
+                helpSkipBtn.disabled = true;
+                clearInterval(timerInterval);
+                currentQuestionIndex++;
+                if (currentQuestionIndex >= questions.length) {
+                    showFinalScreen();
+                    return;
+                }
+                loadQuestion();
+            }
+
+            helpUniversitariosBtn.onclick = () => {
+                if (usedHelps.universitarios) return;
+                if (!helpPopupShown.universitarios) {
+                    helpPopupShown.universitarios = true;
+                    showHelpPopup(
+                        "Ajuda 'Universitários': Uma professora vai te dar uma dica!",
+                        () => {
+                            applyUniversitariosHelp();
+                        }
+                    );
+                } else {
+                    applyUniversitariosHelp();
+                }
+            };
+
+            function applyUniversitariosHelp() {
+                usedHelps.universitarios = true;
+                helpUniversitariosBtn.disabled = true;
+                alert("A professora vai ajudar!");
+                startTimer();
+            }
+
+            helpSustentaBtn.onclick = () => {
+                if (usedHelps.sustenta) return;
+                if (!helpPopupShown.sustenta) {
+                    helpPopupShown.sustenta = true;
+                    showHelpPopup(
+                        "Ajuda 'Sustenta Kids': Remove duas alternativas incorretas.",
+                        () => {
+                            applySustentaHelp();
+                        }
+                    );
+                } else {
+                    applySustentaHelp();
+                }
+            };
+
+            function applySustentaHelp() {
+                usedHelps.sustenta = true;
+                helpSustentaBtn.disabled = true;
+                const correctIdx = questions[currentQuestionIndex].correctIndex;
+                const buttons = Array.from(
+                    document.querySelectorAll(".answer-btn")
+                );
+                const incorrect = buttons.filter(
+                    (btn) =>
+                        parseInt(btn.dataset.index) !== correctIdx &&
+                        !btn.disabled
+                );
+                let removed = 0;
+                while (removed < 2 && incorrect.length > 0) {
+                    const i = Math.floor(Math.random() * incorrect.length);
+                    const btn = incorrect.splice(i, 1)[0];
+                    btn.disabled = true;
+                    btn.style.opacity = "0.4";
+                    removed++;
+                }
+            }
+
+            window.onload = initGame;
+        </script>
+    </body>
+</html>
