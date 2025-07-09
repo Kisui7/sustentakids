@@ -490,10 +490,9 @@
                 "R$ 1.000.000",
             ];
 
-            let currentQuestionIndex = Math.floor(
-                Math.random() * questions.length
-            );
-            let timeLeft = 30;
+            let availableQuestions = [];
+            let currentQuestionIndex = -1;
+            let timeLeft = 60;
             let timerInterval;
             let currentPrizeStep = 0;
 
@@ -528,25 +527,25 @@
 
             function initGame() {
                 currentPrizeStep = 0;
-                currentQuestionIndex = Math.floor(
-                    Math.random() * questions.length
-                );
-                usedHelps.skip =
-                    usedHelps.universitarios =
-                    usedHelps.sustenta =
-                        false;
-                helpPopupShown.skip =
-                    helpPopupShown.universitarios =
-                    helpPopupShown.sustenta =
-                        false;
-                enableHelpButtons();
-                loadQuestion();
-            }
+                availableQuestions = questions.map((_, i) => i); // Preenche com todos os índices
+                currentQuestionIndex = -1;
 
+                usedHelps.skip = false;
+                usedHelps.universitarios = false;
+                usedHelps.sustenta = false;
+
+                helpPopupShown.skip = false;
+                helpPopupShown.universitarios = false;
+                helpPopupShown.sustenta = false;
+
+                enableHelpButtons();
+                nextQuestion();
+            }
             function loadQuestion() {
                 const q = questions[currentQuestionIndex];
                 questionBox.textContent = q.question;
                 answersContainer.innerHTML = "";
+
                 q.answers.forEach((answer, index) => {
                     const btn = document.createElement("button");
                     btn.className = "answer-btn";
@@ -570,7 +569,7 @@
 
             function resetTimer() {
                 clearInterval(timerInterval);
-                timeLeft = 30;
+                timeLeft = 60;
                 timerDisplay.textContent = timeLeft;
             }
 
@@ -634,10 +633,7 @@
                     retryBtn.textContent = "Tentar outra pergunta";
                     retryBtn.onclick = () => {
                         popupOverlay.style.display = "none";
-                        currentQuestionIndex = Math.floor(
-                            Math.random() * questions.length
-                        );
-                        loadQuestion();
+                        nextQuestion();
                     };
                     popupButtons.appendChild(retryBtn);
                 }
@@ -679,9 +675,18 @@
                 popupButtons.appendChild(backBtn);
             }
             function nextQuestion() {
-                currentQuestionIndex = Math.floor(
-                    Math.random() * questions.length
+                if (availableQuestions.length === 0) {
+                    showFinalScreen();
+                    return;
+                }
+
+                const randomIndex = Math.floor(
+                    Math.random() * availableQuestions.length
                 );
+                currentQuestionIndex = availableQuestions.splice(
+                    randomIndex,
+                    1
+                )[0];
                 loadQuestion();
             }
 
