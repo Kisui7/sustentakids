@@ -294,165 +294,177 @@
 
         <script>
             const questions = [
-                // 🌍 Aquecimento Global
                 {
-                    question: "O que é o aquecimento global?",
+                    question:
+                        "Por que é importante reduzir o uso de combustíveis fósseis?",
                     answers: [
-                        "O aumento da temperatura da Terra por causa da poluição",
-                        "Quando o Sol fica mais perto do planeta",
-                        "Quando há mais chuvas no verão",
-                        "Quando os carros andam mais rápido",
+                        "Porque deixam o ar mais perfumado",
+                        "Porque eles poluem e causam o aquecimento global",
+                        "Porque são feitos de vegetais",
+                        "Porque são coloridos demais",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question: "O que podemos fazer para usar menos plástico?",
+                    answers: [
+                        "Comer mais frutas",
+                        "Beber mais água",
+                        "Brincar com garrafas PET",
+                        "Levar sacolas reutilizáveis às compras",
+                    ],
+                    correctIndex: 3,
+                },
+                {
+                    question:
+                        "Qual animal brasileiro está em risco de extinção?",
+                    answers: [
+                        "Cavalo",
+                        "Galinha",
+                        "Gato doméstico",
+                        "Onça-pintada",
+                    ],
+                    correctIndex: 3,
+                },
+                {
+                    question: "O que é o efeito estufa?",
+                    answers: [
+                        "Um fenômeno natural que aquece a Terra",
+                        "Um lugar para plantar árvores",
+                        "Uma fumaça das fábricas",
+                        "Uma casa muito quente",
                     ],
                     correctIndex: 0,
                 },
                 {
-                    question:
-                        "Qual gás poluente contribui para o aquecimento global?",
+                    question: "Qual dessas ações piora o aquecimento global?",
                     answers: [
-                        "Oxigênio",
-                        "Dióxido de carbono (CO₂)",
-                        "Álcool",
-                        "Gás hélio",
-                    ],
-                    correctIndex: 1,
-                },
-                {
-                    question:
-                        "Qual atitude ajuda a diminuir o aquecimento global?",
-                    answers: [
-                        "Desmatar florestas",
                         "Plantar árvores",
-                        "Usar mais plástico",
-                        "Jogar lixo na rua",
+                        "Usar bicicleta",
+                        "Queimar combustíveis fósseis",
+                        "Reciclar papel",
                     ],
-                    correctIndex: 1,
+                    correctIndex: 2,
                 },
                 {
-                    question: "O que acontece quando o planeta esquenta muito?",
+                    question: "O que é uma consequência do aquecimento global?",
                     answers: [
-                        "As árvores crescem mais rápido",
-                        "O mar fica seco",
-                        "As geleiras derretem e o nível do mar sobe",
-                        "Faz mais frio nas cidades",
+                        "Aumento das geleiras",
+                        "Redução do nível do mar",
+                        "Climas mais extremos",
+                        "Mais florestas tropicais",
                     ],
                     correctIndex: 2,
                 },
 
                 // 🌱 Sustentabilidade
                 {
-                    question: "O que é ser sustentável?",
+                    question: "Por que devemos economizar água?",
                     answers: [
-                        "Cuidar do planeta pensando no futuro",
-                        "Comprar muitas roupas",
-                        "Lavar o carro todos os dias",
-                        "Jogar lixo no mato",
+                        "Porque ela custa caro",
+                        "Porque é importante para a vida e pode faltar",
+                        "Porque molha o chão",
+                        "Porque deixa a conta alta",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question: "Qual dessas ações é mais sustentável?",
+                    answers: [
+                        "Usar sacolas reutilizáveis",
+                        "Jogar lixo na rua",
+                        "Lavar a calçada com mangueira",
+                        "Comprar tudo novo sempre",
                     ],
                     correctIndex: 0,
                 },
                 {
                     question:
-                        "Qual dessas atitudes mostra cuidado com a natureza?",
+                        "O que podemos fazer com roupas usadas em bom estado?",
                     answers: [
-                        "Usar canudos de plástico",
-                        "Separar o lixo para reciclagem",
-                        "Deixar luzes acesas sem precisar",
-                        "Desperdiçar comida",
+                        "Jogar fora",
+                        "Guardar para sempre",
+                        "Doar ou reutilizar",
+                        "Queimar no quintal",
                     ],
-                    correctIndex: 1,
+                    correctIndex: 2,
                 },
                 {
-                    question: "Qual dessas ações economiza energia elétrica?",
+                    question: "Por que não devemos jogar lixo em rios e mares?",
                     answers: [
-                        "Usar lâmpadas LED",
-                        "Ligar a TV sem ninguém assistindo",
-                        "Deixar a geladeira aberta",
-                        "Dormir com todas as luzes acesas",
+                        "Porque polui e prejudica os animais",
+                        "Porque os peixes não gostam",
+                        "Porque fica feio",
+                        "Porque dá mau cheiro",
                     ],
                     correctIndex: 0,
-                },
-                {
-                    question: "Qual desses recursos é renovável?",
-                    answers: [
-                        "Petróleo",
-                        "Carvão",
-                        "Água da chuva",
-                        "Gás natural",
-                    ],
-                    correctIndex: 2,
-                },
-
-                // 🐾 Animais em Extinção
-                {
-                    question: "O que significa um animal estar em extinção?",
-                    answers: [
-                        "Ele está dormindo",
-                        "Ele está desaparecendo da natureza",
-                        "Ele está com fome",
-                        "Ele virou um dinossauro",
-                    ],
-                    correctIndex: 1,
-                },
-                {
-                    question:
-                        "Qual dessas atitudes ajuda a proteger os animais?",
-                    answers: [
-                        "Caçar animais silvestres",
-                        "Cuidar das florestas onde eles vivem",
-                        "Jogar lixo nos rios",
-                        "Cortar todas as árvores",
-                    ],
-                    correctIndex: 1,
-                },
-                {
-                    question:
-                        "Por que alguns animais correm risco de extinção?",
-                    answers: [
-                        "Porque nascem muitos filhotes",
-                        "Porque comem muito",
-                        "Por causa da caça e destruição do habitat",
-                        "Porque estão ficando velhos",
-                    ],
-                    correctIndex: 2,
-                },
-                {
-                    question: "Onde vive o urso polar, que está em perigo?",
-                    answers: [
-                        "Na praia",
-                        "Na floresta tropical",
-                        "No gelo das regiões frias",
-                        "No deserto",
-                    ],
-                    correctIndex: 2,
                 },
 
                 // ♻️ Coleta Seletiva
                 {
-                    question: "Para que serve a coleta seletiva?",
-                    answers: [
-                        "Para misturar todo o lixo",
-                        "Para queimar o lixo",
-                        "Para separar os materiais e ajudar a reciclar",
-                        "Para jogar tudo no mar",
-                    ],
-                    correctIndex: 2,
-                },
-                {
-                    question: "Qual cor da lixeira é usada para plástico?",
-                    answers: ["Azul", "Vermelha", "Verde", "Amarela"],
+                    question: "Qual a cor da lixeira para papel?",
+                    answers: ["Verde", "Azul", "Amarela", "Vermelha"],
                     correctIndex: 1,
                 },
                 {
-                    question: "O que deve ser jogado na lixeira azul?",
-                    answers: ["Vidro", "Plástico", "Papel", "Metal"],
-                    correctIndex: 2,
+                    question:
+                        "Qual material deve ser descartado na lixeira verde?",
+                    answers: ["Papel", "Vidro", "Plástico", "Metal"],
+                    correctIndex: 1,
                 },
                 {
-                    question: "Qual dessas atitudes ajuda na reciclagem?",
+                    question:
+                        "Qual dessas atitudes é correta na coleta seletiva?",
                     answers: [
-                        "Separar papel, plástico, vidro e metal",
-                        "Jogar o lixo em qualquer lugar",
-                        "Queimar latas e garrafas",
-                        "Misturar lixo orgânico com reciclável",
+                        "Misturar tudo para facilitar",
+                        "Separar os materiais por tipo",
+                        "Jogar comida com reciclável",
+                        "Lavar o lixo orgânico",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question:
+                        "O que se deve fazer antes de jogar embalagens na coleta seletiva?",
+                    answers: [
+                        "Amassar e misturar com lixo comum",
+                        "Lavar e secar se possível",
+                        "Jogar com restos de comida",
+                        "Rasgar em pedaços pequenos",
+                    ],
+                    correctIndex: 1,
+                },
+
+                // 🌱 Extra: Consumo consciente
+                {
+                    question: "O que é consumo consciente?",
+                    answers: [
+                        "Comprar tudo o que quiser",
+                        "Usar os recursos com responsabilidade",
+                        "Evitar pagar impostos",
+                        "Comprar só coisas caras",
+                    ],
+                    correctIndex: 1,
+                },
+                {
+                    question: "Por que é importante reciclar o lixo?",
+                    answers: [
+                        "Para deixar a cidade mais rica",
+                        "Para ajudar o planeta e reduzir a poluição",
+                        "Para ganhar dinheiro rápido",
+                        "Para ocupar espaço nos terrenos",
+                    ],
+                    correctIndex: 1,
+                },
+
+                // 🌿 Ações no dia a dia
+                {
+                    question: "Como ajudar o planeta no dia a dia?",
+                    answers: [
+                        "Desligando aparelhos quando não usa",
+                        "Usando água em excesso",
+                        "Jogar lixo em terrenos baldios",
+                        "Esquecer luzes acesas sempre",
                     ],
                     correctIndex: 0,
                 },
